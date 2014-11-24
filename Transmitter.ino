@@ -1,9 +1,7 @@
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
 
-#define wait 30000
-char inData[1024];
-char inChar=-1;
+#define wait 3000
 TinyGPS shield;
  
  void getgps(TinyGPS &gps)
@@ -12,30 +10,13 @@ TinyGPS shield;
   float latitude, longitude;
   // Then call this function
   shield.f_get_position(&latitude, &longitude);
-  String str;
   char string[30];
   char charlat[10];    
   char charlon[10]; 
-  int i=0;
   dtostrf(latitude, 3, 5, charlat);
   dtostrf(longitude, 3, 5, charlon);
-  /*for(int j=0;j<sizeof(charlat);j++)
-  {
-    string[i]=charlat[j];
-    i++;
-  }*/
-  
-  //string[i]=';';
-  /*for(int j=0;j<sizeof(charlon);j++)
-  {
-    string[i]=charlon[j];
-    i++;
-  }*/
-  //string[i]='\0';
-  sprintf(string,"%s;%s",charlat,charlon);
-  
-  
-  Serial.println(string);
+ Serial.println("{\"latitude\":\" "+ String(charlat) +"\", \"longitude\":\"" + String(charlon) +"\"}");
+
   
 }
 void setup()
@@ -54,8 +35,9 @@ void loop()
     if(shield.encode(a)) // if there is valid GPS data...
     {
       getgps(shield); 
-      delay(wait);   
+      delay(wait);
+        
     }
   }
-  //
+  
 }
