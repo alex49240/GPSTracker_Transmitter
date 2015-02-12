@@ -10,7 +10,6 @@ TinyGPS shield;
   float latitude, longitude;
   // Then call this function
   shield.f_get_position(&latitude, &longitude);
-  char string[30];
   char charlat[10];    
   char charlon[10]; 
   dtostrf(latitude, 3, 5, charlat);
